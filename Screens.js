@@ -126,17 +126,11 @@ export class ReceiptScreen extends React.Component {
     title: 'Receipt',
   };
   render() {
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Home' })]
-    });
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text style={{ fontSize: 30 }}>Your ride has ended</Text>
         <Button
-          // onPress={() => this.props.navigation.dispatch(resetAction)}
-          onPress={() => this.props.screenProps.parentNavigation.dispatch(resetAction)}
-          // onPress={() => this.props.screenProps.parentNavigation.navigate('Home')}
+          onPress={() => this.props.screenProps.parentNavigation.pop()}
           title="End"
         />
       </View>
