@@ -1,11 +1,24 @@
 import React from 'react';
-import { Button, View, Text } from 'react-native';
+import { BackHandler, Button, View, Text } from 'react-native';
 import { NavigationActions, StackNavigator } from 'react-navigation';
 
 export class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
   };
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+  }
+
+  onBackButtonPressAndroid = () => {
+    return true; //consume the back press
+  };
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
