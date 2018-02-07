@@ -80,7 +80,6 @@ export class StreetCleaningScreen extends React.Component {
       title: 'Street Cleaning',
       headerLeft: (
         <Button
-          // onPress={() => navigation.goBack(null)}
           onPress={() => screenProps.parentNavigation.goBack()}
           title="Back"  
         />  
@@ -105,17 +104,17 @@ export class WalkthroughScreen extends React.Component {
     title: 'End Your Ride',
   };
   render() {
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Receipt' })]
-    });
+    const replaceAction = NavigationActions.replace({
+      key: this.props.screenProps.parentNavigation.state.key,
+      routeName: 'Receipt'
+    })
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ fontSize: 30 }}>Walkthrough checklist</Text>
+        <Text style={{ fontSize: 30 }}>Walkthrough checklist {JSON.stringify(this.props.navigation.state)}</Text>
         <Button
-          onPress={() => this.props.navigation.dispatch(resetAction)}
+          onPress={() => this.props.screenProps.parentNavigation.dispatch(replaceAction)}
           title="Next"
-        />
+          />
       </View>
     );
   }
@@ -130,7 +129,7 @@ export class ReceiptScreen extends React.Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text style={{ fontSize: 30 }}>Your ride has ended</Text>
         <Button
-          onPress={() => this.props.screenProps.parentNavigation.pop()}
+          onPress={() => this.props.navigation.pop()}
           title="End"
         />
       </View>
