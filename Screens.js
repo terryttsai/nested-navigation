@@ -81,7 +81,7 @@ export class StreetCleaningScreen extends React.Component {
       headerLeft: (
         <Button
           // onPress={() => navigation.goBack(null)}
-          onPress={() => screenProps.rootNavigation.goBack()}
+          onPress={() => screenProps.parentNavigation.goBack()}
           title="Back"  
         />  
       )
@@ -135,8 +135,8 @@ export class ReceiptScreen extends React.Component {
         <Text style={{ fontSize: 30 }}>Your ride has ended</Text>
         <Button
           // onPress={() => this.props.navigation.dispatch(resetAction)}
-          onPress={() => this.props.screenProps.rootNavigation.dispatch(resetAction)}
-          // onPress={() => this.props.screenProps.rootNavigation.navigate('Home')}
+          onPress={() => this.props.screenProps.parentNavigation.dispatch(resetAction)}
+          // onPress={() => this.props.screenProps.parentNavigation.navigate('Home')}
           title="End"
         />
       </View>

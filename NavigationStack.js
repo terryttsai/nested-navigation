@@ -35,7 +35,7 @@ const MainStack = StackNavigator(
       screen: DetailsScreen
     },
     EndRide: {
-      screen: ({ navigation }) => <EndRideStack screenProps={{ rootNavigation: navigation }} />
+      screen: ({ navigation }) => <EndRideStack screenProps={{ parentNavigation: navigation }} />
     }
   },
   {
