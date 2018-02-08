@@ -9,20 +9,6 @@ import {
   ModalScreen
 } from './Screens';
 
-const EndRideStack = StackNavigator(
-  {
-    StreetCleaning: {
-      screen: StreetCleaningScreen,
-    },
-    Walkthrough: {
-      screen: WalkthroughScreen
-    },
-  },
-  {
-    initialRouteName: 'StreetCleaning'
-  }
-);
-
 const MainStack = StackNavigator(
   {
     Home: {
@@ -31,8 +17,11 @@ const MainStack = StackNavigator(
     Details: {
       screen: DetailsScreen
     },
-    EndRide: {
-      screen: ({ navigation }) => <EndRideStack screenProps={{ parentNavigation: navigation }} />
+    StreetCleaning: {
+      screen: StreetCleaningScreen,
+    },
+    Walkthrough: {
+      screen: WalkthroughScreen
     },
     Receipt: {
       screen: ReceiptScreen
@@ -40,7 +29,7 @@ const MainStack = StackNavigator(
   },
   {
     initialRouteName: 'Home',
-    headerMode: 'none',
+    // headerMode: 'none',
   }
 );
 

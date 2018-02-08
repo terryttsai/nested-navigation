@@ -8,16 +8,18 @@ export class HomeScreen extends React.Component {
   };
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+    this._s0 = this.props.navigation.addListener('willFocus', () => {
+      BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+    });
+    this._s2 = this.props.navigation.addListener('willBlur', () => {
+      BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+    });
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
+    this._s0.remove();
+    this._s2.remove();
   }
-
-  onBackButtonPressAndroid = () => {
-    return true; //consume the back press
-  };
 
   render() {
     return (
@@ -35,7 +37,7 @@ export class HomeScreen extends React.Component {
         />
         <Button
           title="Go to End Ride"
-          onPress={() => this.props.navigation.navigate('EndRide')}
+          onPress={() => this.props.navigation.navigate('StreetCleaning')}
         />
       </View>
     );
@@ -90,13 +92,7 @@ export class ModalScreen extends React.Component {
 export class StreetCleaningScreen extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => {
     return {
-      title: 'Street Cleaning',
-      headerLeft: (
-        <Button
-          onPress={() => screenProps.parentNavigation.goBack()}
-          title="Back"  
-        />  
-      )
+      title: 'Street Cleaning'
     }
   };
   render() {
@@ -117,15 +113,18 @@ export class WalkthroughScreen extends React.Component {
     title: 'End Your Ride',
   };
   render() {
-    const replaceAction = NavigationActions.replace({
-      key: this.props.screenProps.parentNavigation.state.key,
-      routeName: 'Receipt'
+    const resetAction = NavigationActions.reset({
+      index: 1,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home' }),
+        NavigationActions.navigate({ routeName: 'Receipt' })
+      ]
     })
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text style={{ fontSize: 30 }}>Walkthrough checklist {JSON.stringify(this.props.navigation.state)}</Text>
         <Button
-          onPress={() => this.props.screenProps.parentNavigation.dispatch(replaceAction)}
+          onPress={() => this.props.navigation.dispatch(resetAction)}
           title="Next"
           />
       </View>
