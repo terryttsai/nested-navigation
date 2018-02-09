@@ -7,6 +7,11 @@ export class HomeScreen extends React.Component {
     title: 'Home',
   };
 
+  constructor(props) {
+    super(props);
+    this.props.navigation.state.key = 'HomeKey';
+  }
+
   componentDidMount() {
     this._s0 = this.props.navigation.addListener('willFocus', () => {
       BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPressAndroid);
@@ -95,6 +100,10 @@ export class StreetCleaningScreen extends React.Component {
       title: 'Street Cleaning'
     }
   };
+  constructor(props) {
+    super(props);
+    this.props.navigation.state.key = 'StreetCleaning';
+  }
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -119,14 +128,30 @@ export class WalkthroughScreen extends React.Component {
         NavigationActions.navigate({ routeName: 'Home' }),
         NavigationActions.navigate({ routeName: 'Receipt' })
       ]
-    })
+    });
+    const createAction = (type, fn) => {
+      fn.toString = () => type;
+      return fn;
+    };
+    const customAction = createAction('RemoveRouteFromStack', (payload = {}) => ({
+      type: 'RemoveRouteFromStack',
+      routeName: payload.routeName
+    }));
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text style={{ fontSize: 30 }}>Walkthrough checklist {JSON.stringify(this.props.navigation.state)}</Text>
         <Button
+          onPress={() => this.props.navigation.dispatch(customAction({ routeName: 'StreetCleaning'}))}
+          // onPress={() => this.props.navigation.navigate({ routeName: 'Receipt', key: 'asdf' })}
+          // onPress={() => this.props.navigation.navigate({ routeName: 'Home', key: 'HomeKey' })}
+          title="Remove Street Cleaning from stack"
+        />
+        <Button
           onPress={() => this.props.navigation.dispatch(resetAction)}
+          // onPress={() => this.props.navigation.navigate({ routeName: 'Receipt', key: 'asdf' })}
+          // onPress={() => this.props.navigation.navigate({ routeName: 'Home', key: 'HomeKey' })}
           title="Next"
-          />
+        />
       </View>
     );
   }
@@ -139,7 +164,7 @@ export class ReceiptScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ fontSize: 30 }}>Your ride has ended</Text>
+        <Text style={{ fontSize: 30 }}>Your ride has ended  {JSON.stringify(this.props.navigation.state)}</Text>
         <Button
           onPress={() => this.props.navigation.pop()}
           title="End"

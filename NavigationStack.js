@@ -33,6 +33,22 @@ const MainStack = StackNavigator(
   }
 );
 
+const prevGetStateForActionMainStack = MainStack.router.getStateForAction;
+
+MainStack.router.getStateForAction = (action, state) => {
+  if (state && action.type === 'RemoveRouteFromStack') {
+    const routesCopy = state.routes.slice();
+    routesCopy.splice(routesCopy.findIndex(r => r.routeName === action.routeName), 1);
+    return {
+      ...state,
+      routesCopy,
+      index: routesCopy.length - 1
+    }
+    return null;
+  }
+  return prevGetStateForActionMainStack(action, state);
+}
+
 export const RootStack = StackNavigator(
   {
     Main: {
